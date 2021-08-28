@@ -4,8 +4,8 @@
             <div class="col-span-12">
                 <x-statistik :user='$user'/>
                 <div class="relative py-3 sm:max-w-xl sm:mx-auto">
-                    <div>
-                        <x-statuses :statuses="$statuses"></x-statuses>
+                    <div class="grid grid-cols-2 gap-5">
+                        <x-following :users='$follows'></x-following>
                     </div>
                 </div>
             </div>
