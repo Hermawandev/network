@@ -4,26 +4,45 @@
     </div>
     <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-8">
         <div class="max-w-md mx-auto">
-            <div class="flex  items-center">
-                <div id="dp" class="mr-5"><img
-                        class="w-full h-full rounded-full border-4 border-blue-500 p-1" src="{{ $user->gravatar() }}
-                        alt=" {{ $user->name }}"></div>
-                <div class="">
+            <div class="flex justify-between">
+                <div id="dp"><img class="w-full h-full rounded-full border-4 border-blue-500 p-1"
+                        src="{{ $user->gravatar() }}" alt=" {{ $user->name }}"></div>
+                <div class="self-center">
                     <div id="un" class="font-semibold text-gray-700 text-2xl">
                         {{ $user->name }}
+
                     </div>
-                    <div id="un" class="font-semibold text-gray-400 text-sm">
-                        @ {{$user->username }}
+                    <div id="un" class="font-semibold text-gray-400 text-sm flex">
+                        <div>@</div>{{$user->username }}
                     </div>
                     <div id="un" class="font-semibold text-gray-500 text-xs mt-3">
                         <a href="{{ route('profile', $user->username) }}">Post {{ $user->statuses->count() }}</a>
-                        &nbsp&nbsp&nbsp <a href="{{ route('following', [$user->username, 'following']) }}">Following
+                        &nbsp&nbsp&nbsp <a href="{{ route('following.index', [$user->username, 'following']) }}">Following
                             {{ $user->follows->count() }}</a> &nbsp&nbsp&nbsp <a
-                            href="{{ route('following',[$user->username, 'follower']) }}">Followers
+                            href="{{ route('following.index',[$user->username, 'follower']) }}">Followers
                             {{ $user->followers->count() }}</a>
                     </div>
                     <div class="font-semibold text-gray-500 text-xs mt-1">joined since
                         {{ $user->created_at->diffForHumans() }}</div>
+                </div>
+                <div class="self-start">
+                    @if (Auth::User()->isNot($user))
+                    <form action="{{ route('following.store', $user) }}" method="post">
+                        @csrf
+                        <x-buttonfollow>
+                            @if (Auth::user()->follows()->where('following_user_id', $user->id)->first())
+                                Unfollow
+                            @else
+                                Follow   
+                            @endif
+
+                        </x-buttonfollow>
+                    </form>
+                    @else
+                    <x-buttonfollow>
+                        Edit Profile
+                    </x-buttonfollow>
+                    @endif
                 </div>
             </div>
         </div>
