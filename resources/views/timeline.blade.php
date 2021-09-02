@@ -15,7 +15,8 @@
                                     {{ Auth::user()->name }}
                                 </div>
                                 <div class="my-2">
-                                    <textarea name="body" id= "body" placeholder="what is your mind" class="form-textarea w-full text-gray-800 border-gray-300 rounded-xl resize-none focus:to-blue-500 focus:ring focus:ring-blue-200 transition duration-200"></textarea>
+                                    <textarea name="body" id="body" placeholder="what is your mind"
+                                        class="form-textarea w-full text-gray-800 border-gray-300 rounded-xl resize-none focus:to-blue-500 focus:ring focus:ring-blue-200 transition duration-200"></textarea>
                                 </div>
                                 <div class="text-right">
                                     <x-button>Post</x-button>
@@ -25,7 +26,7 @@
                     </form>
                 </x-card>
                 <div class="space-y-6 mt-6">
-                    <div >
+                    <div>
                         @foreach ($statuses as $status )
                         <x-card>
                             <div class="flex">
@@ -50,12 +51,15 @@
                     </div>
                 </div>
             </div>
+            @if (Auth::user()->follows->count())
             <div class="col-span-5">
                 <div class="border p-5 rounded-xl bg-gray-50">
                     <h1 class="font-semibold mb-5">Recently Follows</h1>
                     <x-following :users='Auth::user()->follows()->limit(5)->get()'></x-following>
                 </div>
             </div>
+            @endif
+
         </div>
     </x-container>
 </x-app-layout>

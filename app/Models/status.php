@@ -9,6 +9,7 @@ class status extends Model
 {
     use HasFactory;
     protected $fillable = ['body','identifier'];
+    protected $with = ['user'];
 
     public function user  ()
     {
